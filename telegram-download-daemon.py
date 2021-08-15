@@ -245,7 +245,7 @@ with TelegramClient(getSession(), api_id, api_hash,
 
                 await log_reply(
                     message,
-                    "Downloading file {0} ({1} bytes)".format(filename,size)
+                    "Downloading file {0} ({1} bytes)".format(filename,f'{size:,}')
                 )
 
                 download_callback = lambda received, total: set_progress(filename, message, received, total)
