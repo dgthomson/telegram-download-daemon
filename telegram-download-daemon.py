@@ -157,7 +157,7 @@ async def set_progress(filename, message, received, total):
         return
     percentage = math.trunc(received / total * 10000) / 100
 
-    progress_message= "{0} % ({1} / {2})".format(percentage, received, total)
+    progress_message= "{0} % ({1} / {2})".format(percentage, f'{received:,}', f'{total:,}')
     in_progress[filename] = progress_message
 
     currentTime=time.time()
