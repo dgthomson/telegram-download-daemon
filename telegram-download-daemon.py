@@ -27,7 +27,7 @@ import argparse
 import asyncio
 
 
-TDD_VERSION="1.12"
+TDD_VERSION="1.12.DGT/20210815"
 
 TELEGRAM_DAEMON_API_ID = getenv("TELEGRAM_DAEMON_API_ID")
 TELEGRAM_DAEMON_API_HASH = getenv("TELEGRAM_DAEMON_API_HASH")
@@ -107,6 +107,13 @@ if not tempFolder:
 proxy = None
 
 # End of interesting parameters
+
+def sizeof_fmt(num, suffix='B'):
+    for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
+        if abs(num) < 1024.0:
+            return "%3.1f%s%s" % (num, unit, suffix)
+        num /= 1024.0
+    return "%.2f %s%s" % (num, 'Yi', suffix)
 
 async def sendHelloMessage(client, peerChannel):
     entity = await client.get_entity(peerChannel)
@@ -245,7 +252,7 @@ with TelegramClient(getSession(), api_id, api_hash,
 
                 await log_reply(
                     message,
-                    "Downloading file {0} ({1} bytes)".format(filename,f'{size:,}')
+                    "Downloading file {0} ({1})".format(filename,sizeof_fmt(size))
                 )
 
                 download_callback = lambda received, total: set_progress(filename, message, received, total)
