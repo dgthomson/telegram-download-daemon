@@ -108,12 +108,17 @@ proxy = None
 
 # End of interesting parameters
 
+# Print iterations progress
+def printProgressBar (iteration, total, length = 20):
+    filledLength = int(length * iteration // total)
+    return '▣' * filledLength + '▢' * (length - filledLength)
+ 
 def sizeof_fmt(num, suffix='B'):
     for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
         if abs(num) < 1024.0:
-            return "%3.2f %s%s" % (num, unit, suffix)
+            return "%3.1f %s%s" % (num, unit, suffix)
         num /= 1024.0
-    return "%.2f %s%s" % (num, 'Yi', suffix)
+    return "%.1f %s%s" % (num, 'Yi', suffix)
 
 async def sendHelloMessage(client, peerChannel):
     entity = await client.get_entity(peerChannel)
@@ -164,7 +169,7 @@ async def set_progress(filename, message, received, total):
         return
     percentage = math.trunc(received / total * 10000) / 100
 
-    progress_message= "{0} % ({1} of {2})".format(percentage, sizeof_fmt(received), sizeof_fmt(total))
+    progress_message= "{0} {1} % ({2} of {3})".format(printProgressBar(received,total), percentage, sizeof_fmt(received), sizeof_fmt(total))
     in_progress[filename] = progress_message
 
     currentTime=time.time()
