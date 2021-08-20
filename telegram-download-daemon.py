@@ -169,7 +169,7 @@ async def set_progress(filename, message, received, total):
         return
     percentage = math.trunc(received / total * 10000) / 100
 
-    progress_message= "{0} {1} % ({2} of {3})".format(printProgressBar(received,total), percentage, sizeof_fmt(received), sizeof_fmt(total))
+    progress_message= "{0}\n{1} % ({2} of {3})".format(printProgressBar(received,total), percentage, sizeof_fmt(received), sizeof_fmt(total))
     in_progress[filename] = progress_message
 
     currentTime=time.time()
@@ -205,11 +205,11 @@ with TelegramClient(getSession(), api_id, api_hash,
                     output = subprocess.run(["ls -l "+downloadFolder], shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT).stdout.decode('utf-8')
                 elif command == "status":
                     try:
-                        output = "".join([ "{0}: {1}\n".format(key,value) for (key, value) in in_progress.items()])
+                        output = "".join([ "{0}: {1}\n\n".format(key,value) for (key, value) in in_progress.items()])
                         if output: 
                             output = "Active downloads:\n\n" + output
                         else: 
-                            output = "No active downloads"
+                            output = "No active downloads."
                     except:
                         output = "Some error occured while checking the status. Retry."
                 elif command == "clean":
