@@ -123,9 +123,7 @@ def sizeof_fmt(num, suffix='B'):
 async def sendHelloMessage(client, peerChannel):
     entity = await client.get_entity(peerChannel)
     print("Telegram Download Daemon "+TDD_VERSION)
-    await client.send_message(entity, "Telegram Download Daemon "+TDD_VERSION+" (Telethon "+__version__+")")
-    await client.send_message(entity, "Hi! Ready for your files!")
- 
+    await client.send_message(entity, "Telegram Download Daemon "+TDD_VERSION+" (Telethon "+__version__+") is ready for your files!")
 
 async def log_reply(message, reply):
     print(reply)
